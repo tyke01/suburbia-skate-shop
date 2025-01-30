@@ -9,6 +9,7 @@ import { PrismicNextLink } from "@prismicio/next";
 import { Bounded } from "@/components/bounded";
 import { Heading } from "@/components/heading";
 import { SkateboardProduct } from "./skateboard-product";
+import { SlideIn } from "@/components/slide-in";
 
 /**
  * Props for `ProductGrid`.
@@ -25,13 +26,17 @@ const ProductGrid = ({ slice }: ProductGridProps): React.JSX.Element => {
       data-slice-variation={slice.variation}
       className="bg-texture bg-brand-gray"
     >
-      <Heading as="h2" className="text-center ~mb-4/6">
-        <PrismicText field={slice.primary.heading} />
-      </Heading>
+      <SlideIn>
+        <Heading as="h2" className="text-center ~mb-4/6">
+          <PrismicText field={slice.primary.heading} />
+        </Heading>
+      </SlideIn>
 
-      <div className="text-center ~mb-6/10">
-        <PrismicRichText field={slice.primary.body} />
-      </div>
+      <SlideIn>
+        <div className="text-center ~mb-6/10">
+          <PrismicRichText field={slice.primary.body} />
+        </div>
+      </SlideIn>
 
       <div className="grid w-full grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-4">
         {slice.primary.product.map(

@@ -9,6 +9,7 @@ import {
 } from "@prismicio/react";
 import clsx from "clsx";
 import { ParallaxImage } from "./parallax-image";
+import { SlideIn } from "@/components/slide-in";
 
 declare module "react" {
   interface CSSProperties {
@@ -52,20 +53,26 @@ const TextAndImage = ({
             slice.variation === "imageOnLeft" && "md:order-2"
           )}
         >
-          <Heading size="lg" as="h2">
-            <PrismicText field={slice.primary.heading} />
-          </Heading>
+          <SlideIn>
+            <Heading size="lg" as="h2">
+              <PrismicText field={slice.primary.heading} />
+            </Heading>
+          </SlideIn>
 
-          <div className="max-w-md text-lg leading-relaxed">
-            <PrismicRichText field={slice.primary.body} />
-          </div>
+          <SlideIn>
+            <div className="max-w-md text-lg leading-relaxed">
+              <PrismicRichText field={slice.primary.body} />
+            </div>
+          </SlideIn>
 
-          <ButtonLink
-            field={slice.primary.button}
-            color={theme === "Lime" ? "orange" : "lime"}
-          >
-            {slice.primary.button.text}
-          </ButtonLink>
+          <SlideIn>
+            <ButtonLink
+              field={slice.primary.button}
+              color={theme === "Lime" ? "orange" : "lime"}
+            >
+              {slice.primary.button.text}
+            </ButtonLink>
+          </SlideIn>
         </div>
         <ParallaxImage
           foregroundImage={slice.primary.foreground_image}
