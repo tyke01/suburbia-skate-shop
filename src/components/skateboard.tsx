@@ -179,12 +179,12 @@ export function Skateboard({
 
     for (const wheel of wheelRefs.current) {
       gsap.to(wheel.rotation, {
-        x: "+=30",
+        x: "-=30",
         duration: 2.5,
-        ease: "circ.out"
-      } )
+        ease: "circ.out",
+      });
     }
-  }, [constantWheelSpin])
+  }, [constantWheelSpin, wheelTextureURL]);
 
   return (
     <group dispose={null}>
