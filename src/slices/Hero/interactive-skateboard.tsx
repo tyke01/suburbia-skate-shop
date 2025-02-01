@@ -57,6 +57,8 @@ function Scene({
 
     if (name === "back") {
       ollie(board);
+    } else if (name === "middle") {
+      kickflip(board);
     }
   }
 
@@ -82,6 +84,37 @@ function Scene({
       });
   }
 
+  function kickflip(board: THREE.Group) {
+    jumpBoard(board);
+
+    gsap
+      .timeline()
+      .to(board.rotation, {
+        x: -0.6,
+        duration: 0.26,
+        ease: "none",
+      })
+      .to(board.rotation, {
+        x: 0.4,
+        duration: 0.82,
+        ease: "power2.in",
+      })
+      .to(
+        board.rotation,
+        {
+          z: `+=${Math.PI * 2}`,
+          duration: 0.78,
+          ease: "none",
+        },
+        0.3
+      )
+      .to(board.rotation, {
+        x: 0,
+        duration: 0.12,
+        ease: "none",
+      });
+  }
+  // ? --------------------------------------------------------------- //
   function jumpBoard(board: THREE.Group) {
     gsap
       .timeline()
