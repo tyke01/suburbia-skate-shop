@@ -1,12 +1,14 @@
 "use client";
 
-import { Canvas, ThreeEvent } from "@react-three/fiber";
-import { Suspense, useRef, useState } from "react";
+import { Canvas, ThreeEvent, useThree } from "@react-three/fiber";
+import { Suspense, useEffect, useRef, useState } from "react";
 import * as THREE from "three";
 import { ContactShadows, Environment, OrbitControls } from "@react-three/drei";
 import { Skateboard } from "@/components/skateboard";
 import gsap from "gsap";
 import { HotSpot } from "./hot-spot";
+
+const INITAL_CAMERA_POSITION = [1.5, 1, 1.4] as const;
 
 interface Props {
   deckTextureURL: string;
@@ -25,7 +27,7 @@ export const InteractiveSkateboard = ({
     <div className="absolute inset-0 z-10 flex items-center justify-center">
       <Canvas
         className="min-h-[60rem] w-full"
-        camera={{ position: [1.5, 1, 1.4], fov: 55 }}
+        camera={{ position: INITAL_CAMERA_POSITION, fov: 55 }}
       >
         <Suspense>
           <Scene
@@ -56,6 +58,25 @@ function Scene({
     middle: true,
     back: true,
   });
+
+  const { camera } = useThree();
+
+  useEffect(() => {
+    camera.lookAt(new THREE.Vector3(-0.2, 0.15, 0));
+    setZoom();
+
+    window.addEventListener("resize", setZoom);
+
+    function setZoom() {
+      const scale = Math.max(Math.min(1000 / window.innerWidth, 2.2), 1);
+
+      camera.position.x = INITAL_CAMERA_POSITION[0] * scale;
+      camera.position.y = INITAL_CAMERA_POSITION[1] * scale;
+      camera.position.z = INITAL_CAMERA_POSITION[2] * scale;
+    }
+
+    return () => window.removeEventListener("resize", setZoom);
+  }, [camera]);
 
   function onClick(event: ThreeEvent<MouseEvent>) {
     event.stopPropagation();
@@ -187,7 +208,6 @@ function Scene({
 
   return (
     <group>
-      <OrbitControls />
       <Environment files={"/hdr/warehouse-256.hdr"} />
       <group ref={originRef}>
         <group ref={containerRef} position={[-0.25, 0, -0.635]}>
