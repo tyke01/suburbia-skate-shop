@@ -14,7 +14,6 @@ interface Props {
   boltColor: string;
 }
 
-
 export const InteractiveSkateboard = ({
   deckTextureURL,
   wheelTextureURL,
@@ -56,6 +55,34 @@ function Scene({
 
     const { name } = event.object;
 
+    if (name === "back") {
+      ollie(board);
+    }
+  }
+
+  function ollie(board: THREE.Group) {
+    jumpBoard(board);
+
+    gsap
+      .timeline()
+      .to(board.rotation, {
+        x: -0.6,
+        duration: 0.26,
+        ease: "none",
+      })
+      .to(board.rotation, {
+        x: 0.4,
+        duration: 0.82,
+        ease: "power2.in",
+      })
+      .to(board.rotation, {
+        x: 0,
+        duration: 0.12,
+        ease: "none",
+      });
+  }
+
+  function jumpBoard(board: THREE.Group) {
     gsap
       .timeline()
       .to(board.position, {
@@ -75,21 +102,33 @@ function Scene({
     <group>
       <OrbitControls />
       <Environment files={"/hdr/warehouse-256.hdr"} />
-      <group ref={containerRef}>
-        <Skateboard
-          wheelTextureURLs={[wheelTextureURL]}
-          wheelTextureURL={wheelTextureURL}
-          deckTextureURLs={[deckTextureURL]}
-          deckTextureURL={deckTextureURL}
-          truckColor={truckColor}
-          boltColor={boltColor}
-          constantWheelSpin
-        />
+      <group ref={containerRef} position={[-0.25, 0, -0.635]}>
+        <group position={[0, -0.086, 0.635]}>
+          <Skateboard
+            wheelTextureURLs={[wheelTextureURL]}
+            wheelTextureURL={wheelTextureURL}
+            deckTextureURLs={[deckTextureURL]}
+            deckTextureURL={deckTextureURL}
+            truckColor={truckColor}
+            boltColor={boltColor}
+            constantWheelSpin
+          />
 
-        <mesh position={[0, 0.27, 0]} name="middle" onClick={onClick}>
-          <boxGeometry args={[0.6, 0.1, 2.2]} />
-          <meshStandardMaterial visible={true} />
-        </mesh>
+          <mesh position={[0, 0.27, 0.9]} name="front" onClick={onClick}>
+            <boxGeometry args={[0.6, 0.2, 0.58]} />
+            <meshStandardMaterial visible={false} />
+          </mesh>
+
+          <mesh position={[0, 0.27, 0]} name="middle" onClick={onClick}>
+            <boxGeometry args={[0.6, 0.1, 1.2]} />
+            <meshStandardMaterial visible={false} />
+          </mesh>
+
+          <mesh position={[0, 0.27, -0.9]} name="back" onClick={onClick}>
+            <boxGeometry args={[0.6, 0.2, 0.58]} />
+            <meshStandardMaterial visible={false} />
+          </mesh>
+        </group>
       </group>
       <ContactShadows opacity={0.6} position={[0, -0.08, 0]} />
     </group>
