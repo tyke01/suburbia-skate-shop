@@ -3,10 +3,16 @@
 import { Canvas, ThreeEvent, useThree } from "@react-three/fiber";
 import { Suspense, useEffect, useRef, useState } from "react";
 import * as THREE from "three";
-import { ContactShadows, Environment, OrbitControls } from "@react-three/drei";
+import {
+  ContactShadows,
+  Environment,
+  Html,
+  OrbitControls,
+} from "@react-three/drei";
 import { Skateboard } from "@/components/skateboard";
 import gsap from "gsap";
 import { HotSpot } from "./hot-spot";
+import { WavyPaths } from "./wavy-paths";
 
 const INITAL_CAMERA_POSITION = [1.5, 1, 1.4] as const;
 
@@ -258,6 +264,21 @@ function Scene({
         </group>
       </group>
       <ContactShadows opacity={0.6} position={[0, -0.08, 0]} />
+
+      <group
+        rotation={[-Math.PI / 2, 0, -Math.PI / 2]}
+        position={[0, -0.09, -0.5]}
+        scale={[0.2, 0.2, 0.2]}
+      >
+        <Html
+          transform
+          zIndezRange={[1, 0]}
+          occlude="blending"
+          wrapperClass="pointer-events-none"
+        >
+          <WavyPaths />
+        </Html>
+      </group>
     </group>
   );
 }
