@@ -9,7 +9,7 @@ import {
   useTexture,
 } from "@react-three/drei";
 import { Canvas } from "@react-three/fiber";
-import { Suspense, useRef } from "react";
+import { Suspense, useEffect, useRef } from "react";
 import { useCustomizerControls } from "./context";
 import { Skateboard } from "@/components/skateboard";
 
@@ -37,6 +37,40 @@ const Preview = ({ wheelTextureURLs, deckTextureURLs }: Props) => {
   const truckColor = selectedTruck?.color ?? DEFAULT_TRUCK_COLOR;
   const boltColor = selectedBolt?.color ?? DEFAULT_BOLT_COLOR;
 
+  useEffect(() => {
+    setCameraControls(
+      new THREE.Vector3(0, 0.3, 0),
+      new THREE.Vector3(1.5, 0.8, 0)
+    );
+  }, [selectedDeck]);
+
+  useEffect(() => {
+    setCameraControls(
+      new THREE.Vector3(-0.12, 0.29, 0.57),
+      new THREE.Vector3(0.1, 0.25, 0.9)
+    );
+  }, [selectedTruck]);
+
+  useEffect(() => {
+    setCameraControls(
+      new THREE.Vector3(-0.08, 0.54, 0.64),
+      new THREE.Vector3(0.09, 1, 0.9)
+    );
+  }, [selectedWheel]);
+
+  useEffect(() => {
+    setCameraControls(
+      new THREE.Vector3(-0.25, 0.3, 0.62),
+      new THREE.Vector3(-0.5, 0.35, 0.8)
+    );
+  }, [selectedBolt]);
+
+  function setCameraControls(targer: THREE.Vector3, pos: THREE.Vector3) {
+    if (!cameraControls.current) return;
+    cameraControls.current.setTarget(targer.x, targer.y, targer.z, true);
+    cameraControls.current.setPosition(pos.x, pos.y, pos.z, true);
+  }
+
   function onCameraControlStart() {
     if (
       !cameraControls.current ||
@@ -44,7 +78,7 @@ const Preview = ({ wheelTextureURLs, deckTextureURLs }: Props) => {
       cameraControls.current.colliderMeshes.length > 0
     )
       return;
-
+    cameraControls.current.colliderMeshes = []; // Clear existing colliders
     cameraControls.current.colliderMeshes = [floorRef.current];
   }
 
@@ -83,11 +117,13 @@ const Preview = ({ wheelTextureURLs, deckTextureURLs }: Props) => {
           boltColor={boltColor}
           pose="side"
         />
+
         <CameraControls
           ref={cameraControls}
-          minDistance={0.2}
+          minDistance={0.8}
           maxDistance={4}
           onStart={onCameraControlStart}
+          makeDefault
         />
       </Suspense>
       <Preload all />
