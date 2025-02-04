@@ -15,10 +15,12 @@ export function Bounded({
   ...restProps
 }: BoundedProps) {
   return (
+    // @ts-ignore
     <Comp
+      // @ts-ignore
       className={clsx(
         "px-6 ~py-10/16 [.header+&]:pt-44 [.header+&]:md:pt-32",
-        className,
+        className
       )}
       {...restProps}
     >
