@@ -4,12 +4,11 @@ import {
   PrismicText,
   SliceComponentProps,
 } from "@prismicio/react";
-import { PrismicNextLink } from "@prismicio/next";
 
 import { Bounded } from "@/components/bounded";
 import { Heading } from "@/components/heading";
-import { SkateboardProduct } from "./skateboard-product";
 import { SlideIn } from "@/components/slide-in";
+import { SkateboardProduct } from "./skateboard-product";
 
 /**
  * Props for `ProductGrid`.

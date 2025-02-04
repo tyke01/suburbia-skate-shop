@@ -1,10 +1,9 @@
 "use client";
 
-import { SVGProps } from "react";
 import clsx from "clsx";
+import { SVGProps } from "react";
 
 import { useIsSafari } from "@/lib/use-is-safari";
-import { truncate } from "node:fs";
 
 export function WideLogo({ className, ...props }: SVGProps<SVGSVGElement>) {
   const isSafari = useIsSafari(true);

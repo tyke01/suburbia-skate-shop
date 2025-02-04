@@ -1,5 +1,4 @@
 import { asImageSrc, Content } from "@prismicio/client";
-import { PrismicNextLink } from "@prismicio/next";
 import {
   PrismicRichText,
   PrismicText,
@@ -8,11 +7,11 @@ import {
 import { JSX } from "react";
 
 import { Bounded } from "@/components/bounded";
-import { Heading } from "@/components/heading";
 import { ButtonLink } from "@/components/button-link";
-import { WideLogo } from "./wide-logo";
-import { TallLogo } from "./tall-logo";
+import { Heading } from "@/components/heading";
 import { InteractiveSkateboard } from "./interactive-skateboard";
+import { TallLogo } from "./tall-logo";
+import { WideLogo } from "./wide-logo";
 
 
 
