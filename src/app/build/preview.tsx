@@ -83,7 +83,11 @@ const Preview = ({ wheelTextureURLs, deckTextureURLs }: Props) => {
   }
 
   return (
-    <Canvas camera={{ position: [2.5, 1, 0], fov: 50 }} shadows>
+    <Canvas
+      camera={{ position: [2.5, 1, 0], fov: 50 }}
+      shadows
+      className=""
+    >
       <Suspense fallback={null}>
         <Environment
           files={"/hdr/warehouse-512.hdr"}

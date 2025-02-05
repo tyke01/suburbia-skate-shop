@@ -21,9 +21,7 @@ const page = async (props: { searchParams: Promise<SearchParams> }) => {
   const searchParams = await props.searchParams;
 
   const client = createClient();
-
   const customizerSettings = await client.getSingle("board_customizer");
-
   const { wheels, decks, metals } = customizerSettings.data;
 
   const defaultWheel =
@@ -38,7 +36,6 @@ const page = async (props: { searchParams: Promise<SearchParams> }) => {
   const wheelTextureURLs = wheels
     .map((texture) => asImageSrc(texture.texture))
     .filter((url): url is string => Boolean(url));
-
   const deckTextureURLs = decks
     .map((texture) => asImageSrc(texture.texture))
     .filter((url): url is string => Boolean(url));
@@ -51,32 +48,30 @@ const page = async (props: { searchParams: Promise<SearchParams> }) => {
         defaultTruck={defaultTruck}
         defaultBolt={defaultBolt}
       >
-        <div className="relative aspect-squate shrink-0 bg-[#3a414a] lg:aspect-auto lg:grow">
+        {/* Preview Section */}
+        <div className="relative aspect-square shrink-0 bg-[#3a414a] lg:aspect-auto lg:h-auto lg:grow h-[50vh]">
           <div className="absolute inset-0">
             <Preview
               deckTextureURLs={deckTextureURLs}
               wheelTextureURLs={wheelTextureURLs}
             />
           </div>
-          {/* preview */}
-          <Link href="/" className="absolute left-6 top-6">
-            <Logo className="h-12 text-white" />
+          <Link href="/" className="absolute left-4 top-4 lg:left-6 lg:top-6">
+            <Logo className="h-10 lg:h-12 text-white" />
           </Link>
         </div>
 
-        <div className="grow bg-texture bg-zinc-900 text-white ~p-4/6 lg:w-96 lg:shrink-0 lg:grow-0">
-          {/* sidebar */}
+        {/* Sidebar Section */}
+        <div className="grow bg-texture bg-zinc-900 text-white p-6 sm:p-8 lg:w-96 lg:shrink-0 lg:grow-0">
           <Heading as="h1" size="sm" className="mb-6 mt-0">
             Build Your Board
           </Heading>
-
           <Controls
             wheels={wheels}
             decks={decks}
             metals={metals}
             className="mb-6"
           />
-
           <ButtonLink href="" color="lime" icon="plus">
             Add to cart
           </ButtonLink>
